@@ -12,6 +12,8 @@
 		28D2D2731E420A4800C5A9B0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28D2D2711E420A4800C5A9B0 /* Main.storyboard */; };
 		28D2D2751E420A4800C5A9B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28D2D2741E420A4800C5A9B0 /* Assets.xcassets */; };
 		28D2D2781E420A4800C5A9B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28D2D2761E420A4800C5A9B0 /* LaunchScreen.storyboard */; };
+		28D2D2811E42122700C5A9B0 /* beep-01a.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28D2D27F1E42122700C5A9B0 /* beep-01a.wav */; };
+		28D2D2821E42122700C5A9B0 /* beep-02.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28D2D2801E42122700C5A9B0 /* beep-02.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		28D2D2741E420A4800C5A9B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		28D2D2771E420A4800C5A9B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		28D2D2791E420A4800C5A9B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		28D2D27F1E42122700C5A9B0 /* beep-01a.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "beep-01a.wav"; path = "../../../Downloads/beep-01a.wav"; sourceTree = "<group>"; };
+		28D2D2801E42122700C5A9B0 /* beep-02.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "beep-02.wav"; path = "../../../Downloads/beep-02.wav"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,8 @@
 		28D2D26C1E420A4800C5A9B0 /* jinglify */ = {
 			isa = PBXGroup;
 			children = (
+				28D2D27F1E42122700C5A9B0 /* beep-01a.wav */,
+				28D2D2801E42122700C5A9B0 /* beep-02.wav */,
 				28D2D26D1E420A4800C5A9B0 /* AppDelegate.swift */,
 				28D2D26F1E420A4800C5A9B0 /* ViewController.swift */,
 				28D2D2711E420A4800C5A9B0 /* Main.storyboard */,
@@ -127,6 +133,8 @@
 				28D2D2781E420A4800C5A9B0 /* LaunchScreen.storyboard in Resources */,
 				28D2D2751E420A4800C5A9B0 /* Assets.xcassets in Resources */,
 				28D2D2731E420A4800C5A9B0 /* Main.storyboard in Resources */,
+				28D2D2811E42122700C5A9B0 /* beep-01a.wav in Resources */,
+				28D2D2821E42122700C5A9B0 /* beep-02.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
