@@ -11,16 +11,11 @@ import Foundation
 import MediaPlayer
 import AVKit
 
-class ViewController: UIViewController, MPMediaPickerControllerDelegate {
+class ViewController: UIViewController {
     // MARK: - Reference outlets
-    @IBOutlet weak var chooseButton: UIButton!
-    @IBOutlet weak var matchTimeLabel: UILabel!
     @IBOutlet weak var gameView: UIView!
-    @IBOutlet weak var songTitle: UILabel!
     @IBOutlet weak var timeLeftLabel: UILabel!
-    @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var songArtist: UILabel!
-    
+
     // MARK: - Fields
     var player : MPMusicPlayerController?
     var beepPlayer : AVAudioPlayer?
@@ -45,33 +40,10 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
         beepPlayer = getAudioPlayer(forFile: "beep-01a", withExtension: "wav")
         shortBeepPlayer = getAudioPlayer(forFile: "beep-02", withExtension: "wav")
         gameView.isHidden = true
-        startButton.isEnabled = false
+
         masterVolumeSlider = MPVolumeView()
         masterVolumeSlider?.alpha = 0.01
         self.view.addSubview(masterVolumeSlider!)
-    }
-    
-    // MARK: - MPMediaPickerControllerDelegate impl
-    func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
-        mediaPicker.dismiss(animated: true)
-        if(mediaItemCollection.count > 0)
-        {
-            let song = mediaItemCollection.items[0]
-            songArtist.text = song.artist ?? "-"
-            songTitle.text = song.title ?? "-"
-            player?.setQueue(with: mediaItemCollection)
-            player?.nowPlayingItem = song
-            player?.prepareToPlay()
-            startButton.isEnabled = true
-            startButton.backgroundColor = UIColor.init(red: 52 / 255,
-                                                       green: 94 / 255,
-                                                       blue: 242 / 255,
-                                                       alpha: 1.0)
-        }
-    }
-    
-    func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
-        mediaPicker.dismiss(animated: true)
     }
     
     // MARK: - Event handlers
@@ -96,19 +68,7 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
     @IBAction func onStopGameTap(_ sender: Any) {
         stopGame()
     }
-    
-    @IBAction func onChooseButtonTap(_ sender: Any) {
-        let controller = MPMediaPickerController(mediaTypes: MPMediaType.music)
-        controller.delegate = self
-        controller.allowsPickingMultipleItems = false
-        self.present(controller, animated: true)
-    }
 
-    @IBAction func matchTimeChanged(_ sender: Any) {
-        matchTime = (sender as! UIStepper).value
-        matchTimeLabel.text = "\(Int(matchTime)) min"
-    }
-    
     @IBAction func onStartTap(_ sender: Any) {
         startGame()
     }

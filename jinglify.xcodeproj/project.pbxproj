@@ -14,6 +14,7 @@
 		28D2D2781E420A4800C5A9B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28D2D2761E420A4800C5A9B0 /* LaunchScreen.storyboard */; };
 		28D2D2851E423F3C00C5A9B0 /* beep-01a.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28D2D2831E423F3C00C5A9B0 /* beep-01a.wav */; };
 		28D2D2861E423F3C00C5A9B0 /* beep-02.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28D2D2841E423F3C00C5A9B0 /* beep-02.wav */; };
+		8556FA851E4A0D0E00629336 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556FA841E4A0D0E00629336 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		28D2D2791E420A4800C5A9B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28D2D2831E423F3C00C5A9B0 /* beep-01a.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "beep-01a.wav"; sourceTree = "<group>"; };
 		28D2D2841E423F3C00C5A9B0 /* beep-02.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "beep-02.wav"; sourceTree = "<group>"; };
+		8556FA841E4A0D0E00629336 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				28D2D2841E423F3C00C5A9B0 /* beep-02.wav */,
 				28D2D26D1E420A4800C5A9B0 /* AppDelegate.swift */,
 				28D2D26F1E420A4800C5A9B0 /* ViewController.swift */,
+				8556FA841E4A0D0E00629336 /* SettingsViewController.swift */,
 				28D2D2711E420A4800C5A9B0 /* Main.storyboard */,
 				28D2D2741E420A4800C5A9B0 /* Assets.xcassets */,
 				28D2D2761E420A4800C5A9B0 /* LaunchScreen.storyboard */,
@@ -102,7 +105,7 @@
 				TargetAttributes = {
 					28D2D2691E420A4800C5A9B0 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 29E7C29QHD;
+						DevelopmentTeam = VZPAK93H3H;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -147,6 +150,7 @@
 			files = (
 				28D2D2701E420A4800C5A9B0 /* ViewController.swift in Sources */,
 				28D2D26E1E420A4800C5A9B0 /* AppDelegate.swift in Sources */,
+				8556FA851E4A0D0E00629336 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,10 +271,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 29E7C29QHD;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = VZPAK93H3H;
 				INFOPLIST_FILE = jinglify/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.qisoft.jinglify;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qisoft.jinglify1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -280,10 +285,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 29E7C29QHD;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = VZPAK93H3H;
 				INFOPLIST_FILE = jinglify/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.qisoft.jinglify;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qisoft.jinglify1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -308,6 +314,7 @@
 				28D2D27E1E420A4800C5A9B0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
