@@ -57,13 +57,16 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
         if(mediaItemCollection.count > 0)
         {
             let song = mediaItemCollection.items[0]
-            songArtist.text = song.artist!
-            songTitle.text = song.title!
+            songArtist.text = song.artist ?? "-"
+            songTitle.text = song.title ?? "-"
             player?.setQueue(with: mediaItemCollection)
             player?.nowPlayingItem = song
             player?.prepareToPlay()
             startButton.isEnabled = true
-            startButton.backgroundColor = UIColor.init(red: 52 / 255, green: 94 / 255, blue: 242 / 255, alpha: 1.0)
+            startButton.backgroundColor = UIColor.init(red: 52 / 255,
+                                                       green: 94 / 255,
+                                                       blue: 242 / 255,
+                                                       alpha: 1.0)
         }
     }
     
@@ -147,7 +150,7 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
         case 30+Double(beepTime): beepPlayer?.play()
         default: break
         }
-        
+
         switch timeLeft {
         case 0:
             beepPlayer?.play()
