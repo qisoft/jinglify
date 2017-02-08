@@ -21,7 +21,6 @@ class ViewController: UIViewController {
     var beepPlayer : AVAudioPlayer?
     var shortBeepPlayer : AVAudioPlayer?
     var masterVolumeSlider  : MPVolumeView?
-    var matchTime = 5 as Double;
     var matchTimeLeft: Double = 0.0
     var totalMatchTime: Double = 0.0
     var beepTime = 0
@@ -29,6 +28,8 @@ class ViewController: UIViewController {
     var initialVolume : Float = 0.0
     var isJinglePlaying : Bool = false
     var isThrowing : Bool = false
+
+    var gameSettings = GameSettings()
     
     // MARK: - View controller lifecycle
     override func viewDidLoad() {
@@ -44,6 +45,11 @@ class ViewController: UIViewController {
         masterVolumeSlider = MPVolumeView()
         masterVolumeSlider?.alpha = 0.01
         self.view.addSubview(masterVolumeSlider!)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        startGame()
     }
     
     // MARK: - Event handlers
@@ -68,16 +74,13 @@ class ViewController: UIViewController {
     @IBAction func onStopGameTap(_ sender: Any) {
         stopGame()
     }
-
-    @IBAction func onStartTap(_ sender: Any) {
-        startGame()
-    }
     
     //MARK: - Game methods
     func startGame(){
+        enqueSongs()
         gameView.isHidden = false
         beepTime = getRandomBeepTime()
-        totalMatchTime = matchTime * 60 + 30 + Double(beepTime)
+        totalMatchTime = gameSettings.matchTime * 60 + 30 + Double(beepTime)
         matchTimeLeft = totalMatchTime
         isGameStarted = true
         self.update(timeLeft: totalMatchTime, timeSpent: 0)
@@ -95,11 +98,18 @@ class ViewController: UIViewController {
         }
         
     }
-    
+
+    func enqueSongs() {
+        player?.setQueue(with: gameSettings.songs)
+        player?.nowPlayingItem = gameSettings.songs.items.first
+        player?.prepareToPlay()
+    }
+
     func stopGame(){
         gameView.isHidden = true
         isGameStarted = false
         player?.stop()
+        dismiss(animated: true, completion: nil)
     }
     
     func update(timeLeft: Double, timeSpent: Double){
@@ -117,7 +127,7 @@ class ViewController: UIViewController {
             stopGame()
         case 7: fadeOutAndStopPlayer()
         case 30: playJingle()
-        case 59..<matchTime * 60:
+        case 59..<gameSettings.matchTime * 60:
             if timeLeft.truncatingRemainder(dividingBy: 60.0) == 0 {
                 beep(times: Int(timeLeft.divided(by: 60)))
             }
@@ -127,7 +137,7 @@ class ViewController: UIViewController {
         if isThrowing {
             timeLeftLabel.text = "Get Ready!"
         }
-        else if(timeLeft <= matchTime * 60){
+        else if(timeLeft <= gameSettings.matchTime * 60){
             timeLeftLabel.text = stringFromTimeInterval(interval: timeLeft)
         }
         else if (timeSpent <= 30){

@@ -11,7 +11,7 @@ import MediaPlayer
 
 struct GameSettings {
     var matchTime: Double = 5.0
-    var songs: [MPMediaItem]
+    var songs = MPMediaItemCollection(items: Array<MPMediaItem>())
 }
 
 class SettingsViewController: UIViewController, MPMediaPickerControllerDelegate {
@@ -22,34 +22,26 @@ class SettingsViewController: UIViewController, MPMediaPickerControllerDelegate 
     @IBOutlet weak var songArtist: UILabel!
     @IBOutlet weak var startButton: UIButton!
 
-    var gameSettings = GameSettings(matchTime: 5.0, songs: Array<MPMediaItem>())
+    var gameSettings = GameSettings()
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         startButton.isEnabled = false
-
-        // Do any additional setup after loading the view.
     }
 
-    var songsList = [MPMediaItem]()
-
     // MARK: - MPMediaPickerControllerDelegate impl
-    func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
+    func mediaPicker(_ mediaPicker: MPMediaPickerController,
+                     didPickMediaItems mediaItemCollection: MPMediaItemCollection)
+    {
         mediaPicker.dismiss(animated: true)
-        //        if (mediaItemCollection.count > 0) {
-        //            songsList = mediaItemCollection.items
-        //        }
 
-
+        gameSettings.songs = mediaItemCollection
         if(mediaItemCollection.count > 0)
         {
             let song = mediaItemCollection.items[0]
             songArtist.text = song.artist ?? "-"
             songTitle.text = song.title ?? "-"
-//            player?.setQueue(with: mediaItemCollection)
-//            player?.nowPlayingItem = song
-//            player?.prepareToPlay()
             startButton.isEnabled = true
             startButton.backgroundColor = UIColor.init(red: 52 / 255,
                                                        green: 94 / 255,
@@ -61,6 +53,8 @@ class SettingsViewController: UIViewController, MPMediaPickerControllerDelegate 
     func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
         mediaPicker.dismiss(animated: true)
     }
+
+    //MARK: - Actions
 
     @IBAction func onChooseButtonTap(_ sender: Any) {
         let controller = MPMediaPickerController(mediaTypes: MPMediaType.music)
@@ -74,14 +68,13 @@ class SettingsViewController: UIViewController, MPMediaPickerControllerDelegate 
         matchTimeLabel.text = "\(Int(gameSettings.matchTime)) min"
     }
 
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if (segue.identifier == "startGame") {
+            if let gameVC = segue.destination as? ViewController {
+                gameVC.gameSettings = gameSettings
+            }
+        }
     }
-    */
 
 }
