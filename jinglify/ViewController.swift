@@ -33,6 +33,7 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
     var isGameStarted = false
     var initialVolume : Float = 0.0
     var isJinglePlaying : Bool = false
+    var isThrowing : Bool = false
     
     // MARK: - View controller lifecycle
     override func viewDidLoad() {
@@ -46,7 +47,7 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
         gameView.isHidden = true
         startButton.isEnabled = false
         masterVolumeSlider = MPVolumeView()
-        masterVolumeSlider!.alpha = 0.01
+        masterVolumeSlider?.alpha = 0.01
         self.view.addSubview(masterVolumeSlider!)
     }
     
@@ -58,9 +59,9 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
             let song = mediaItemCollection.items[0]
             songArtist.text = song.artist!
             songTitle.text = song.title!
-            player!.setQueue(with: mediaItemCollection)
-            player!.nowPlayingItem = song
-            player!.prepareToPlay()
+            player?.setQueue(with: mediaItemCollection)
+            player?.nowPlayingItem = song
+            player?.prepareToPlay()
             startButton.isEnabled = true
             startButton.backgroundColor = UIColor.init(red: 52 / 255, green: 94 / 255, blue: 242 / 255, alpha: 1.0)
         }
@@ -75,7 +76,7 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
         if self.isJinglePlaying {
             player?.pause()
         }
-        
+        isThrowing = true
         Timer.scheduledTimer(withTimeInterval: TimeInterval(getRandomBeepTime()), repeats: false) { (timer) in
             if !self.isGameStarted {
                 return
@@ -85,6 +86,7 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
             if self.isJinglePlaying {
                 self.player?.play()
             }
+            self.isThrowing = false
         }
     }
     
@@ -121,7 +123,11 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
                 timer.invalidate()
                 return
             }
-            self.matchTimeLeft = self.matchTimeLeft - 1
+            
+            if !self.isThrowing {
+                self.matchTimeLeft = self.matchTimeLeft - 1
+            }
+            
             self.update(timeLeft: self.matchTimeLeft, timeSpent: self.totalMatchTime - self.matchTimeLeft)
         }
         
@@ -137,7 +143,7 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
         print("time spent: \(timeSpent), time left: \(timeLeft)")
         switch timeSpent {
         case 0: playJingle()
-        case 25: fadeOutAndStopPlayer()
+        case 22: fadeOutAndStopPlayer()
         case 30+Double(beepTime): beepPlayer?.play()
         default: break
         }
@@ -155,7 +161,10 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
         default: break
         }
         
-        if(timeLeft <= matchTime * 60){
+        if isThrowing {
+            timeLeftLabel.text = "Get Ready!"
+        }
+        else if(timeLeft <= matchTime * 60){
             timeLeftLabel.text = stringFromTimeInterval(interval: timeLeft)
         }
         else if (timeSpent <= 30){
@@ -230,7 +239,7 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
     
     // MARK: - Random utils
     func getRandomBeepTime() -> Int {
-        let random = arc4random_uniform(2) + 3
+        let random = arc4random_uniform(2) + 2
         return Int(random)
     }
     
