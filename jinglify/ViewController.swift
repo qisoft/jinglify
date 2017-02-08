@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     var player : MPMusicPlayerController?
     var beepPlayer : AVAudioPlayer?
     var shortBeepPlayer : AVAudioPlayer?
-    var masterVolumeSlider  : MPVolumeView?
+    var masterVolumeSlider = MPVolumeView()
     var matchTimeLeft: Double = 0.0
     var totalMatchTime: Double = 0.0
     var beepTime = 0
@@ -42,9 +42,8 @@ class ViewController: UIViewController {
         shortBeepPlayer = getAudioPlayer(forFile: "beep-02", withExtension: "wav")
         gameView.isHidden = true
 
-        masterVolumeSlider = MPVolumeView()
-        masterVolumeSlider?.alpha = 0.01
-        self.view.addSubview(masterVolumeSlider!)
+        masterVolumeSlider.alpha = 0.01
+        self.view.addSubview(masterVolumeSlider)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -185,7 +184,7 @@ class ViewController: UIViewController {
     }
     
     func fadeOutAndStopPlayer(){
-        if let view = self.masterVolumeSlider?.subviews.last as? UISlider{
+        if let view = self.masterVolumeSlider.subviews.last as? UISlider{
             Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: { (timer) in
                 if !self.isGameStarted {
                     timer.invalidate()
