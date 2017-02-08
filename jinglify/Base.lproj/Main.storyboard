@@ -129,6 +129,7 @@
                         <outlet property="songArtist" destination="kDQ-BF-CwZ" id="7xh-qb-Nn2"/>
                         <outlet property="songTitle" destination="uXH-nE-TRp" id="s4C-hQ-jns"/>
                         <outlet property="startButton" destination="Rxd-YT-cJt" id="M3L-QZ-LCB"/>
+                        <outlet property="timeStepper" destination="7y5-vI-CKx" id="eLQ-Xa-zjs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nvh-We-duS" userLabel="First Responder" sceneMemberID="firstResponder"/>
