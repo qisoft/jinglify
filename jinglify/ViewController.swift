@@ -99,8 +99,9 @@ class ViewController: UIViewController {
     }
 
     func enqueSongs() {
-        player?.setQueue(with: gameSettings.songs)
-        player?.nowPlayingItem = gameSettings.songs.items.first
+        let matchCollection = MPMediaItemCollection(items: [gameSettings.jingle])
+        player?.setQueue(with: matchCollection)
+        player?.nowPlayingItem = matchCollection.items.first
         player?.prepareToPlay()
     }
 

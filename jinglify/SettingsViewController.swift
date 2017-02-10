@@ -22,15 +22,19 @@ struct GameSettings {
             matchTime = savedMatchTime
         }
 
-        songs = MPMediaItemCollection(items: Array<MPMediaItem>())
-        if let ids = UserDefaults.standard.array(forKey: songsKey) as? [UInt64] {
-            let predicates = ids.map({ (id) -> MPMediaPredicate in
-                return MPMediaPropertyPredicate.init(value: id, forProperty: MPMediaItemPropertyPersistentID)
-            })
-            let query = MPMediaQuery(filterPredicates: Set(predicates))
-            if let qItems = query.items {
-                songs = MPMediaItemCollection(items: qItems)
-            }
+        songs = MPMediaItemCollection(items: [])
+        if let ids = UserDefaults.standard.array(forKey: songsKey) as? [UInt64],
+            ids.count > 0
+        {
+            songs = MPMediaItemCollection(items:
+                ids.map({ (id) -> MPMediaPredicate in
+                    return MPMediaPropertyPredicate(value: id,
+                                                    forProperty: MPMediaItemPropertyPersistentID)
+                }).flatMap({ (predicate) in
+                    let query = MPMediaQuery()
+                    query.addFilterPredicate(predicate)
+                    return query.items?.first
+                }))
         }
     }
 
@@ -45,10 +49,18 @@ struct GameSettings {
         }
     }
 
+    var jingle: MPMediaItem {
+        get {
+            let itemIndex = Int(arc4random_uniform(UInt32(songs.items.count)))
+            return songs.items[itemIndex]
+        }
+    }
+
     private func save() {
         let ids = songs.items.map { $0.persistentID }
         UserDefaults.standard.set(ids, forKey: songsKey)
         UserDefaults.standard.set(matchTime, forKey: matchTimeKey)
+        UserDefaults.standard.synchronize()
     }
 }
 
@@ -57,13 +69,15 @@ class SettingsViewController: UIViewController, MPMediaPickerControllerDelegate 
     @IBOutlet weak var chooseButton: UIButton!
     @IBOutlet weak var matchTimeLabel: UILabel!
     @IBOutlet weak var songTitle: UILabel!
-    @IBOutlet weak var songArtist: UILabel!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var timeStepper: UIStepper!
+    @IBOutlet weak var tracksContainer: UIView!
+
+    var tracksCollection: TracksTableViewController?
 
     var gameSettings = GameSettings()
 
-    //MARK: - Lifecycle 
+    //MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,14 +89,15 @@ class SettingsViewController: UIViewController, MPMediaPickerControllerDelegate 
 
     func showSelectSong() {
         if (gameSettings.songs.count > 0) {
-            let song = gameSettings.songs.items.first
-            songArtist.text = song?.artist ?? "-"
-            songTitle.text = song?.title ?? "-"
+            tracksContainer.isHidden = false
+            tracksCollection?.tracks = gameSettings.songs.items
             startButton.isEnabled = true
             startButton.backgroundColor = UIColor.init(red: 52 / 255,
                                                        green: 94 / 255,
                                                        blue: 242 / 255,
                                                        alpha: 1.0)
+        } else {
+            tracksContainer.isHidden = true
         }
     }
 
@@ -120,6 +135,12 @@ class SettingsViewController: UIViewController, MPMediaPickerControllerDelegate 
                 gameVC.gameSettings = gameSettings
             }
         }
+        if (segue.identifier == "tracksCollection") {
+            tracksCollection = segue.destination as? TracksTableViewController
+            tracksCollection?.onEditTracks = { (tracks) in
+                self.gameSettings.songs = MPMediaItemCollection(items: tracks)
+            }
+        }
     }
-
+    
 }

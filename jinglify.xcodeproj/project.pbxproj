@@ -14,6 +14,8 @@
 		28D2D2781E420A4800C5A9B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28D2D2761E420A4800C5A9B0 /* LaunchScreen.storyboard */; };
 		28D2D2851E423F3C00C5A9B0 /* beep-01a.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28D2D2831E423F3C00C5A9B0 /* beep-01a.wav */; };
 		28D2D2861E423F3C00C5A9B0 /* beep-02.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28D2D2841E423F3C00C5A9B0 /* beep-02.wav */; };
+		854E76671E4DA17800238A0E /* TracksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854E76661E4DA17800238A0E /* TracksTableViewController.swift */; };
+		854E76691E4DA1F700238A0E /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854E76681E4DA1F700238A0E /* TrackCell.swift */; };
 		8556FA851E4A0D0E00629336 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556FA841E4A0D0E00629336 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +29,8 @@
 		28D2D2791E420A4800C5A9B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28D2D2831E423F3C00C5A9B0 /* beep-01a.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "beep-01a.wav"; sourceTree = "<group>"; };
 		28D2D2841E423F3C00C5A9B0 /* beep-02.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "beep-02.wav"; sourceTree = "<group>"; };
+		854E76661E4DA17800238A0E /* TracksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TracksTableViewController.swift; sourceTree = "<group>"; };
+		854E76681E4DA1F700238A0E /* TrackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
 		8556FA841E4A0D0E00629336 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,6 +69,8 @@
 				28D2D26D1E420A4800C5A9B0 /* AppDelegate.swift */,
 				28D2D26F1E420A4800C5A9B0 /* ViewController.swift */,
 				8556FA841E4A0D0E00629336 /* SettingsViewController.swift */,
+				854E76661E4DA17800238A0E /* TracksTableViewController.swift */,
+				854E76681E4DA1F700238A0E /* TrackCell.swift */,
 				28D2D2711E420A4800C5A9B0 /* Main.storyboard */,
 				28D2D2741E420A4800C5A9B0 /* Assets.xcassets */,
 				28D2D2761E420A4800C5A9B0 /* LaunchScreen.storyboard */,
@@ -148,6 +154,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				854E76691E4DA1F700238A0E /* TrackCell.swift in Sources */,
+				854E76671E4DA17800238A0E /* TracksTableViewController.swift in Sources */,
 				28D2D2701E420A4800C5A9B0 /* ViewController.swift in Sources */,
 				28D2D26E1E420A4800C5A9B0 /* AppDelegate.swift in Sources */,
 				8556FA851E4A0D0E00629336 /* SettingsViewController.swift in Sources */,
