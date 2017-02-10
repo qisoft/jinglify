@@ -100,7 +100,7 @@ class ViewController: UIViewController {
 
     func enqueSongs() {
         player?.setQueue(with: gameSettings.songs)
-        player?.nowPlayingItem = gameSettings.songs.items.first
+        player?.nowPlayingItem = gameSettings.jingle
         player?.prepareToPlay()
     }
 
