@@ -137,6 +137,9 @@ class SettingsViewController: UIViewController, MPMediaPickerControllerDelegate 
         }
         if (segue.identifier == "tracksCollection") {
             tracksCollection = segue.destination as? TracksTableViewController
+            tracksCollection?.onEditTracks = { (tracks) in
+                self.gameSettings.songs = MPMediaItemCollection(items: tracks)
+            }
         }
     }
     

@@ -22,10 +22,7 @@ class TracksTableViewController: UITableViewController {
         }
     }
 
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        tableView.reloadData()
-//    }
+    var onEditTracks: ((_ newTracks: [MPMediaItem]) -> Void)?
 
     // MARK: - Table view data source
 
@@ -50,4 +47,20 @@ class TracksTableViewController: UITableViewController {
 
         return cell
     }
+
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    override func tableView(_ tableView: UITableView,
+                            editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let action = UITableViewRowAction(style: UITableViewRowActionStyle.destructive,
+                                          title: "Remove") { (action, indexPath) in
+                                            self.tracks.remove(at: indexPath.row)
+                                            self.onEditTracks?(self.tracks)
+        }
+        return [action]
+    }
+
+
 }
