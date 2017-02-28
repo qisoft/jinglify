@@ -18,8 +18,8 @@ default_platform :ios
 platform :ios do
   before_all do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
-   ensure_git_status_clean 
-    
+   ensure_git_status_clean
+
   end
 
   desc "Runs all the tests"
@@ -34,9 +34,6 @@ platform :ios do
     # match(type: "appstore") # more information: https://codesigning.guide
     gym(scheme: "jinglify") # Build your app - more options available
     pilot
-
-    # sh "your_script.sh"
-    # You can also use other beta testing services here (run `fastlane actions`)
   end
 
   desc "Deploy a new version to the App Store"
@@ -56,33 +53,20 @@ platform :ios do
     full_version="#{get_version_number}(#{get_build_number})"
     commit_version_bump(
       message: "Version bump #{full_version}"
-      xcodeproject: "jinglify.xcodeproj"
-    )
-    push_to_git_remote(
-      remote: "origin"
-      local_branch: "git_branch"
+      xcodeproj: "jinglify.xcodeproj"
     )
     add_git_tag
-    push_git_tags
-    
+    push_to_git_remote(local_branch: git_branch)
+
     create_pull_request(
       api_token: ENV["GITHUB_TOKEN"],
       repo: "qisoft/jinglify",
       title: "Next awesome build #{full_version}"
     )
-    
-    # This block is called, only if the executed lane was successful
-
-    # slack(
-    #   message: "Successfully deployed new App Update."
-    # )
   end
 
   error do |lane, exception|
-    # slack(
-    #   message: exception.message,
-    #   success: false
-    # )
+
   end
 end
 
