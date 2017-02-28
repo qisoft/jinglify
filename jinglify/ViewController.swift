@@ -53,6 +53,7 @@ class ViewController: UIViewController {
     
     // MARK: - Event handlers
     @IBAction func onThrowTap(_ sender: Any) {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
         if self.isJinglePlaying {
             player?.pause()
         }
