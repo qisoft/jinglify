@@ -56,11 +56,11 @@ platform :ios do
     full_version="#{get_version_number}(#{get_build_number})"
     commit_version_bump(
       message: "Version bump #{full_version}"
-      xcodeproject: jinglify.xcodeproj
+      xcodeproject: "jinglify.xcodeproj"
     )
     push_to_git_remote(
-      remote: origin
-      local_branch: git_branch
+      remote: "origin"
+      local_branch: "git_branch"
     )
     add_git_tag
     push_git_tags
