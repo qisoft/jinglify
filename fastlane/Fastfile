@@ -52,7 +52,7 @@ platform :ios do
     clean_build_artifacts
     full_version="#{get_version_number}(#{get_build_number})"
     commit_version_bump(
-      message: "Version bump #{full_version}"
+      message: "Version bump #{full_version}",
       xcodeproj: "jinglify.xcodeproj"
     )
     add_git_tag
