@@ -30,7 +30,7 @@ class ViewController: UIViewController {
     var isThrowing : Bool = false
 
     var gameSettings = GameSettings()
-    
+
     // MARK: - View controller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,9 +50,10 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
         startGame()
     }
-    
+
     // MARK: - Event handlers
     @IBAction func onThrowTap(_ sender: Any) {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
         if self.isJinglePlaying {
             player?.pause()
         }
@@ -61,19 +62,24 @@ class ViewController: UIViewController {
             if !self.isGameStarted {
                 return
             }
-            
-            self.beepPlayer?.play()
-            if self.isJinglePlaying {
-                self.player?.play()
+
+            if let volSlider = self.masterVolumeSlider.subviews.last as? UISlider {
+                let lastVolume = volSlider.value
+                volSlider.value = 1.0
+                self.beepPlayer?.play()
+                volSlider.value = lastVolume
+                if self.isJinglePlaying {
+                    self.player?.play()
+                }
+                self.isThrowing = false
             }
-            self.isThrowing = false
         }
     }
-    
+
     @IBAction func onStopGameTap(_ sender: Any) {
         stopGame()
     }
-    
+
     //MARK: - Game methods
     func startGame(){
         enqueSongs()
@@ -88,14 +94,14 @@ class ViewController: UIViewController {
                 timer.invalidate()
                 return
             }
-            
+
             if !self.isThrowing {
                 self.matchTimeLeft = self.matchTimeLeft - 1
             }
-            
+
             self.update(timeLeft: self.matchTimeLeft, timeSpent: self.totalMatchTime - self.matchTimeLeft)
         }
-        
+
     }
 
     func enqueSongs() {
@@ -111,7 +117,7 @@ class ViewController: UIViewController {
         player?.stop()
         dismiss(animated: true, completion: nil)
     }
-    
+
     func update(timeLeft: Double, timeSpent: Double){
         print("time spent: \(timeSpent), time left: \(timeLeft)")
         switch timeSpent {
@@ -133,7 +139,7 @@ class ViewController: UIViewController {
             }
         default: break
         }
-        
+
         if isThrowing {
             timeLeftLabel.text = "Get Ready!"
         }
@@ -147,9 +153,9 @@ class ViewController: UIViewController {
             timeLeftLabel.text = "Get Ready!"
         }
     }
-    
+
     // MARK: - Audio player utils
-    
+
     func getAudioPlayer(forFile : String, withExtension : String) -> AVAudioPlayer?{
         if let url = Bundle.main.url(forResource: forFile, withExtension: withExtension){
             do {
@@ -158,17 +164,17 @@ class ViewController: UIViewController {
         }
         return nil
     }
-    
+
     func playJingle(){
         player?.play()
         isJinglePlaying = true
     }
-    
+
     func stopJingle(){
         player?.stop()
         isJinglePlaying = false
     }
-    
+
     func beep(times: Int){
         var beepsLeft = times
         Timer.scheduledTimer(withTimeInterval: 0.7, repeats: true) { (timer) in
@@ -183,9 +189,9 @@ class ViewController: UIViewController {
             }
         }
     }
-    
+
     func fadeOutAndStopPlayer(){
-        if let view = self.masterVolumeSlider.subviews.last as? UISlider{
+        if let view = self.masterVolumeSlider.subviews.last as? UISlider {
             Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: { (timer) in
                 if !self.isGameStarted {
                     timer.invalidate()
@@ -209,13 +215,13 @@ class ViewController: UIViewController {
             })
         }
     }
-    
+
     // MARK: - Random utils
     func getRandomBeepTime() -> Int {
         let random = arc4random_uniform(2) + 2
         return Int(random)
     }
-    
+
     func stringFromTimeInterval(interval: TimeInterval) -> String {
         let interval = Int(interval)
         let seconds = interval % 60
