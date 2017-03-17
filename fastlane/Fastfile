@@ -32,7 +32,7 @@ platform :ios do
     increment_version_number
     match(type: "appstore", readonly: true)
     gym(scheme: "jinglify")
-    pilot(distribute_external: true)
+    pilot
   end
 
   desc "Deploy a new version to the App Store"
