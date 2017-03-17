@@ -77,7 +77,15 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onStopGameTap(_ sender: Any) {
-        stopGame()
+        let alert = UIAlertController(title: "Stop game", message: "Do you want to stop the game?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { _ in
+            self.stopGame()
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: .destructive, handler: { _ in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        
+        present(alert, animated: true, completion: nil)
     }
 
     //MARK: - Game methods
