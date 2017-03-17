@@ -17,9 +17,8 @@ default_platform :ios
 
 platform :ios do
   before_all do
-    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+   ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
    ensure_git_status_clean
-
   end
 
   desc "Runs all the tests"
@@ -31,22 +30,15 @@ platform :ios do
   desc "This will also make sure the profile is up to date"
   lane :beta do
     increment_version_number
-    # match(type: "appstore") # more information: https://codesigning.guide
-    gym(scheme: "jinglify") # Build your app - more options available
+    match(type: "appstore", readonly: true)
+    gym(scheme: "jinglify")
     pilot
   end
 
   desc "Deploy a new version to the App Store"
   lane :release do
-    increment_version_number
-    # match(type: "appstore")
-    # snapshot
-    gym(scheme: "jinglify") # Build your app - more options available
-    deliver(force: true)
-    # frameit
+    puts "🖕 Deploy to Appstore not supported. 🖕"
   end
-
-  # You can define as many lanes as you want
 
   after_all do |lane|
     clean_build_artifacts
@@ -57,22 +49,10 @@ platform :ios do
     )
     add_git_tag
     push_to_git_remote(local_branch: git_branch)
-
-    create_pull_request(
-      api_token: ENV["GITHUB_TOKEN"],
-      repo: "qisoft/jinglify",
-      title: "Next awesome build #{full_version}"
-    )
+    slack(message: "Jinglify #{full_version} deployed to Appstore. Will be available on TestFlight soon.")
   end
 
   error do |lane, exception|
-
+    slack(message: "Build failed #{exception} on lane: #{lane}")
   end
 end
-
-
-# More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
-# All available actions: https://docs.fastlane.tools/actions
-
-# fastlane reports which actions are used
-# No personal data is recorded. Learn more at https://github.com/fastlane/enhancer
