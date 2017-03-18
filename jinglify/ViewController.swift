@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var timeLeftLabel: UILabel!
     @IBOutlet weak var pauseGameButton: UIButton!
     @IBOutlet weak var throwThePuckButton: UIButton!
+    @IBOutlet weak var currentPeriodLabel: UILabel!
 
     var gameSettings = GameSettings()
     var game : Game?
@@ -24,17 +25,22 @@ class ViewController: UIViewController {
     // MARK: - View controller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        game = Game(withAudioPlayer: AudioPlayer(withSong: gameSettings.jingle))
+        let player = AudioPlayer(withSong: gameSettings.jingle)
+        game = Game(withAudioPlayer: player)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let game = self.game {
-            game.startGame(withStatusUpdateHandler: { () in
-                self.timeLeftLabel.text = game.getStatusText()
-            }, andGameEndHandler: {() in
+            game.startGame(withGameEndHandler: {() in
                 self.dismiss(animated: true)
             })
+            game.statusText.didChange.addHandler { (_, n) in
+                self.timeLeftLabel.text = n
+            }
+            game.currentPeriod.didChange.addHandler { (_, n) in
+                self.currentPeriodLabel.text = "Period \(n)"
+            }
         }
     }
 

@@ -10,14 +10,14 @@ struct GameSettings {
 
     private let matchTimeKey = "matchTime"
     private let songsKey = "songs"
+    private let periodsCountKey = "periodsCount"
 
     init() {
         let savedMatchTime = UserDefaults.standard.double(forKey: matchTimeKey)
-        if (savedMatchTime == 0.0) {
-            matchTime = 5.0
-        } else {
-            matchTime = savedMatchTime
-        }
+        matchTime = savedMatchTime == 0.0 ? 5.0 : savedMatchTime
+        
+        let savedPeriodsCount = UserDefaults.standard.integer(forKey: periodsCountKey)
+        periodsCount = savedPeriodsCount == 0 ? 1 : savedPeriodsCount
 
         songs = MPMediaItemCollection(items: [])
         if let ids = UserDefaults.standard.array(forKey: songsKey) as? [UInt64],
@@ -42,6 +42,13 @@ struct GameSettings {
             save()
         }
     }
+
+    var periodsCount: Int {
+        didSet {
+            save()
+        }
+    }
+
     var songs: MPMediaItemCollection {
         didSet {
             save()
@@ -59,6 +66,7 @@ struct GameSettings {
         let ids = songs.items.map { $0.persistentID }
         UserDefaults.standard.set(ids, forKey: songsKey)
         UserDefaults.standard.set(matchTime, forKey: matchTimeKey)
+        UserDefaults.standard.set(periodsCount, forKey: periodsCountKey)
         UserDefaults.standard.synchronize()
     }
 }
