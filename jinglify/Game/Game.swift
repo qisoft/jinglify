@@ -9,73 +9,87 @@
 import Foundation
 
 class Game {
-    private var matchTimeLeft: Double = 0.0
-    private var totalMatchTime: Double = 0.0
+    private var matchTimeLeft: Int = 0
+    private var totalMatchTime: Int = 0
     private var initialBeepTimeOffset = 0
     private var isGameStarted = false
+    private var lastHandledTime : Int = -1
     private var isJinglePlaying : Bool = false
-    private var isThrowing : Bool = false
     private var player : AudioPlayer
     private var settings : GameSettings
     private var totalPeriods : Int
-    private(set) var isPaused : Bool = false
+    private(set) var isPaused = Observable<Bool>(false)
     private(set) var currentPeriod = Observable<Int>(1)
     private(set) var statusText = Observable<String>("")
 
     private var gameTimer : Timer?
     private var throwingTimer : Timer?
     private var gameEndHandler : (() -> Void)?
+    private(set) static var currentGame : Game?
 
     init(withAudioPlayer audioPlayer: AudioPlayer) {
         settings = GameSettings()
         player = audioPlayer
         initialBeepTimeOffset = Utils.getRandomBeepTime()
-        totalMatchTime = settings.matchTime * 60 + 30 + Double(initialBeepTimeOffset)
+        totalMatchTime = Int(settings.matchTime * 60) + 30 + initialBeepTimeOffset
         matchTimeLeft = totalMatchTime
         totalPeriods = settings.periodsCount >= 1 ? settings.periodsCount : 1
+        Game.currentGame = self
     }
 
     func startGame(withGameEndHandler gameEndHandler: @escaping () -> Void){
         isGameStarted = true
         self.gameEndHandler = gameEndHandler
-        gameTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
+        self.setupGameTimer()
+    }
 
-            if !self.isThrowing && !self.isPaused {
-                self.update(
-                        timeLeft: self.matchTimeLeft,
-                        timeSpent: self.totalMatchTime - self.matchTimeLeft)
-                self.matchTimeLeft = self.matchTimeLeft - 1
-            }
+    private func setupGameTimer(){
+        if let gameTimer = self.gameTimer {
+            gameTimer.invalidate()
+        }
+
+        self.update(timeLeft: self.matchTimeLeft,
+                timeSpent: self.totalMatchTime - self.matchTimeLeft)
+        self.gameTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
+            self.matchTimeLeft = self.matchTimeLeft - 1
+            self.update(timeLeft: self.matchTimeLeft,
+                    timeSpent: self.totalMatchTime - self.matchTimeLeft)
         }
     }
 
     func pauseGame(){
-        isPaused = true
-        statusText.set(newValue: "Paused")
-        if isJinglePlaying {
+        self.isPaused.set(newValue: true)
+        self.invalidateTimers()
+        self.statusText.set(newValue: "Paused")
+        if self.isJinglePlaying {
             self.player.pauseJingle()
         }
     }
 
     func resumeGame(){
-        isPaused = false
+        self.isPaused.set(newValue: false)
+        self.setupGameTimer()
         if isJinglePlaying {
             self.player.playJingle()
         }
     }
 
+    private func invalidateTimers(){
+        self.gameTimer?.invalidate()
+        self.gameTimer = nil
+        self.throwingTimer?.invalidate()
+        self.throwingTimer = nil
+    }
+
     func stopGame(){
-        isGameStarted = false
-        player.stopPlayers()
-        gameTimer?.invalidate()
-        gameTimer = nil
-        throwingTimer?.invalidate()
-        throwingTimer = nil
+        self.isGameStarted = false
+        self.invalidateTimers()
+        self.player.stopPlayers()
         self.gameEndHandler?()
     }
 
     private func playJingle(){
-        isJinglePlaying = true
+        self.isJinglePlaying = true
         self.player.playJingle()
     }
 
@@ -87,31 +101,55 @@ class Game {
             player.pauseJingle()
         }
 
-        isThrowing = true
-        throwingTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(Utils.getRandomBeepTime()), repeats: false) { (timer) in
+        self.invalidateTimers()
+        self.throwingTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(Utils.getRandomBeepTime()), repeats: false) { (timer) in
             self.player.longBeep()
             if self.isJinglePlaying {
                 self.player.playJingle()
             }
-            self.isThrowing = false
+            self.setupGameTimer()
         }
     }
     
     private func startNewPeriod(){
-        try player.changeSong(song: settings.jingle)
+        self.player.changeSong(song: settings.jingle)
         self.currentPeriod.set(newValue: self.currentPeriod.get() + 1)
         self.matchTimeLeft = totalMatchTime + 10
     }
 
-    private func update(timeLeft: Double, timeSpent: Double){
+    private func updateStatus(timeLeft: Int, timeSpent: Int){
+        if(timeSpent < 0){
+            statusText.set(newValue: "Change your sides!")
+        }
+        else if(timeLeft <= Int(settings.matchTime * 60)){
+            statusText.set(newValue: Utils.stringFromTimeInterval(interval: Double(timeLeft)))
+        }
+        else if (timeSpent >= 0 && timeSpent <= 27){
+            statusText.set(newValue: "Warm-up!")
+        }
+        else{
+            statusText.set(newValue: "Get Ready!")
+        }
+    }
+
+    private func update(timeLeft: Int, timeSpent: Int){
+        self.updateStatus(timeLeft: timeLeft, timeSpent: timeSpent)
+
+        // prevent events from occurring twice
+        if lastHandledTime == timeSpent {
+            return
+        }
+        lastHandledTime = timeSpent
+
         print("time spent: \(timeSpent), time left: \(timeLeft)")
         switch timeSpent {
-        case 0: self.playJingle()
+        case 0:
+            self.playJingle()
         case 22:
             self.player.fadeOutAndStopPlayer(onComplete: { () in
                 self.isJinglePlaying = false
             })
-        case 30+Double(initialBeepTimeOffset): self.player.longBeep()
+        case 30+initialBeepTimeOffset: self.player.longBeep()
         default: break
         }
 
@@ -129,24 +167,11 @@ class Game {
             self.isJinglePlaying = false
         })
         case 30: self.playJingle()
-        case 59..<settings.matchTime * 60:
-            if timeLeft.truncatingRemainder(dividingBy: 60.0) == 0 {
-                self.player.beep(times: Int(timeLeft.divided(by: 60)))
+        case 59..<Int(settings.matchTime * 60):
+            if timeLeft % 60 == 0 {
+                self.player.beep(times: Int(timeLeft / 60))
             }
         default: break
-        }
-
-        if(timeSpent < 0){
-            statusText.set(newValue: "Change your sides!")
-        }
-        else if(timeLeft <= settings.matchTime * 60){
-            statusText.set(newValue: Utils.stringFromTimeInterval(interval: timeLeft))
-        }
-        else if (timeSpent >= 0 && timeSpent <= 30){
-            statusText.set(newValue: "Warm-up!")
-        }
-        else{
-            statusText.set(newValue: "Get Ready!")
         }
     }
 }
