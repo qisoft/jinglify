@@ -30,6 +30,8 @@ struct GameSettings {
             }).flatMap({ (predicate) in
                 let query = MPMediaQuery()
                 query.addFilterPredicate(predicate)
+                query.addFilterPredicate(MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyHasProtectedAsset))
+                query.addFilterPredicate(MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem))
                 return query.items?.first
             }))
         }
