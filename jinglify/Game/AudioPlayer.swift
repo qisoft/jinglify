@@ -18,8 +18,8 @@ class AudioPlayer {
 
     init(withSong song: MPMediaItem){
         do {
-            player = try AVAudioPlayer(contentsOf: song.value(forProperty: MPMediaItemPropertyAssetURL) as! URL)
-            player?.prepareToPlay()
+            let url = song.value(forProperty: MPMediaItemPropertyAssetURL) as? URL
+            player = try AVAudioPlayer(contentsOf: url!)
         } catch { }
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
@@ -80,28 +80,48 @@ class AudioPlayer {
         playerTimer = nil
     }
 
-    private func getVolume() -> Float{
-        return player?.volume ?? 0
-    }
-
     private func setVolume(to value: Float){
-        player?.volume = value
+        player?.setVolume(value, fadeDuration: 0.1)
+        print("new volume is \(value)")
     }
 
+    let volumeCurve : [Float] = [
+        1.0,
+        0.8,
+        0.6,
+        0.4,
+        0.2,
+        0.1,
+        0.08,
+        0.06,
+        0.04,
+        0.02,
+        0.01,
+        0.008,
+        0.006,
+        0.004,
+        0.002,
+        0.001,
+        0.0006,
+        0.0003,
+        0
+    ]
+    
     func fadeOutAndStopPlayer(onComplete: @escaping () -> Void){
-        playerTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: { (timer) in
-
-            self.setVolume(to: self.getVolume() - 0.1)
-            if(self.getVolume() == 0){
+        var volumeCurveIdx : Int = 0
+        playerTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true, block: { (timer) in
+            let volume = self.volumeCurve[volumeCurveIdx]
+            volumeCurveIdx += 1
+            self.setVolume(to: volume)
+            if(volume == 0){
                 self.player?.stop()
+                self.player?.currentTime = 0
                 onComplete()
-                Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
-                    self.setVolume(to: 1.0)
-                })
+                self.setVolume(to: 1.0)
+                
                 self.playerTimer?.invalidate()
                 self.playerTimer = nil
             }
         })
-
     }
 }

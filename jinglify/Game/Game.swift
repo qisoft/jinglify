@@ -20,7 +20,7 @@ class Game {
     private var statusText : String = ""
     private var gameTimer : Timer?
     private var throwingTimer : Timer?
-    private var gameEndHandler : () -> Void
+    private var gameEndHandler : (() -> Void)?
 
     init(withAudioPlayer audioPlayer: AudioPlayer) {
         settings = GameSettings()
@@ -33,6 +33,7 @@ class Game {
     func startGame(withGameUpdateHandler gameUpdateHandler: @escaping () -> Void,
                    andGameEndHandler gameEndHandler: @escaping () -> Void){
         isGameStarted = true
+        self.gameEndHandler = gameEndHandler
         self.update(withGameUpdateHandler: gameUpdateHandler, timeLeft: self.totalMatchTime, timeSpent: 0)
         gameTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
 
@@ -45,7 +46,6 @@ class Game {
                     timeLeft: self.matchTimeLeft,
                     timeSpent: self.totalMatchTime - self.matchTimeLeft)
         }
-        self.gameEndHandler = gameEndHandler
     }
 
     func stopGame(){
@@ -55,7 +55,7 @@ class Game {
         gameTimer = nil
         throwingTimer?.invalidate()
         throwingTimer = nil
-        self.gameEndHandler()
+        self.gameEndHandler?()
     }
 
     private func playJingle(){
@@ -122,5 +122,6 @@ class Game {
         else{
             statusText = "Get Ready!"
         }
+        gameUpdateHandler()
     }
 }

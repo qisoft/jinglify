@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		285B2B991E7D535500EF0550 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 285B2B981E7D535500EF0550 /* AudioToolbox.framework */; };
+		285B2B9B1E7D535900EF0550 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 285B2B9A1E7D535900EF0550 /* AVFoundation.framework */; };
 		28D2D26E1E420A4800C5A9B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D2D26D1E420A4800C5A9B0 /* AppDelegate.swift */; };
 		28D2D2701E420A4800C5A9B0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D2D26F1E420A4800C5A9B0 /* ViewController.swift */; };
 		28D2D2731E420A4800C5A9B0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28D2D2711E420A4800C5A9B0 /* Main.storyboard */; };
@@ -24,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		285B2B981E7D535500EF0550 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		285B2B9A1E7D535900EF0550 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		28D2D26A1E420A4800C5A9B0 /* jinglify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jinglify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28D2D26D1E420A4800C5A9B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		28D2D26F1E420A4800C5A9B0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,17 +51,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				285B2B9B1E7D535900EF0550 /* AVFoundation.framework in Frameworks */,
+				285B2B991E7D535500EF0550 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		285B2B971E7D535500EF0550 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				285B2B9A1E7D535900EF0550 /* AVFoundation.framework */,
+				285B2B981E7D535500EF0550 /* AudioToolbox.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		28D2D2611E420A4800C5A9B0 = {
 			isa = PBXGroup;
 			children = (
 				28D2D26C1E420A4800C5A9B0 /* jinglify */,
 				28D2D26B1E420A4800C5A9B0 /* Products */,
+				285B2B971E7D535500EF0550 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
