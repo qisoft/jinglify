@@ -17,10 +17,15 @@ class Game {
     private var isThrowing : Bool = false
     private var player : AudioPlayer
     private var settings : GameSettings
-    private var statusText : String = ""
+    private var statusText : String = ""{
+        didSet {
+            self.statusUpdateHandler?()
+        }
+    }
     private var gameTimer : Timer?
     private var throwingTimer : Timer?
     private var gameEndHandler : (() -> Void)?
+    private var statusUpdateHandler: (() -> Void)?
 
     init(withAudioPlayer audioPlayer: AudioPlayer) {
         settings = GameSettings()
@@ -30,21 +35,22 @@ class Game {
         matchTimeLeft = totalMatchTime
     }
 
-    func startGame(withGameUpdateHandler gameUpdateHandler: @escaping () -> Void,
+    func startGame(withStatusUpdateHandler statusUpdateHandler: @escaping () -> Void,
                    andGameEndHandler gameEndHandler: @escaping () -> Void){
         isGameStarted = true
         self.gameEndHandler = gameEndHandler
-        self.update(withGameUpdateHandler: gameUpdateHandler, timeLeft: self.totalMatchTime, timeSpent: 0)
+        self.statusUpdateHandler = statusUpdateHandler
+        self.update(timeLeft: self.totalMatchTime, timeSpent: 0)
         gameTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
 
             if !self.isThrowing {
                 self.matchTimeLeft = self.matchTimeLeft - 1
-            }
 
-            self.update(
-                    withGameUpdateHandler: gameUpdateHandler,
-                    timeLeft: self.matchTimeLeft,
-                    timeSpent: self.totalMatchTime - self.matchTimeLeft)
+
+                self.update(
+                        timeLeft: self.matchTimeLeft,
+                        timeSpent: self.totalMatchTime - self.matchTimeLeft)
+            }
         }
     }
 
@@ -68,6 +74,8 @@ class Game {
     }
 
     func throwAPuck(){
+        
+        statusText = "Get Ready!"
         player.vibrate()
         if self.isJinglePlaying {
             player.pauseJingle()
@@ -83,7 +91,7 @@ class Game {
         }
     }
 
-    private func update(withGameUpdateHandler gameUpdateHandler: @escaping () -> Void, timeLeft: Double, timeSpent: Double){
+    private func update(timeLeft: Double, timeSpent: Double){
         print("time spent: \(timeSpent), time left: \(timeLeft)")
         switch timeSpent {
         case 0: self.playJingle()
@@ -110,10 +118,7 @@ class Game {
         default: break
         }
 
-        if isThrowing {
-            statusText = "Get Ready!"
-        }
-        else if(timeLeft <= settings.matchTime * 60){
+        if(timeLeft <= settings.matchTime * 60){
             statusText = Utils.stringFromTimeInterval(interval: timeLeft)
         }
         else if (timeSpent <= 30){
@@ -122,6 +127,5 @@ class Game {
         else{
             statusText = "Get Ready!"
         }
-        gameUpdateHandler()
     }
 }

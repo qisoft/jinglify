@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let game = self.game {
-            game.startGame(withGameUpdateHandler: { () in
+            game.startGame(withStatusUpdateHandler: { () in
                 self.timeLeftLabel.text = game.getStatusText()
             }, andGameEndHandler: {() in
                 self.dismiss(animated: true)
