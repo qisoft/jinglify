@@ -16,11 +16,8 @@ class AudioPlayer {
     private var beepTimer: Timer?
     private var playerTimer: Timer?
 
-    init(withSong song: MPMediaItem){
-        do {
-            let url = song.value(forProperty: MPMediaItemPropertyAssetURL) as? URL
-            player = try AVAudioPlayer(contentsOf: url!)
-        } catch { }
+    init(withSong song: MPMediaItem) {
+        changeSong(song: song)
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         } catch{ }
@@ -34,6 +31,14 @@ class AudioPlayer {
 
     func vibrate(){
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    }
+    
+    func changeSong(song: MPMediaItem) {
+        if let url = song.value(forProperty: MPMediaItemPropertyAssetURL) as? URL {
+            do {
+                player = try AVAudioPlayer(contentsOf: url)
+            } catch { }
+        }
     }
 
     func pauseJingle(){

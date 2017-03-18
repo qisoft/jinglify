@@ -16,7 +16,9 @@ class SettingsViewController: UIViewController, MPMediaPickerControllerDelegate 
     @IBOutlet weak var songTitle: UILabel!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var timeStepper: UIStepper!
+    @IBOutlet weak var periodsCountStepper: UIStepper!
     @IBOutlet weak var tracksContainer: UIView!
+    @IBOutlet weak var periodsCountLabel: UILabel!
 
     var tracksCollection: TracksTableViewController?
 
@@ -29,7 +31,9 @@ class SettingsViewController: UIViewController, MPMediaPickerControllerDelegate 
         startButton.isEnabled = false
         showSelectSong()
         timeStepper.value = gameSettings.matchTime
+        periodsCountStepper.value = Double(gameSettings.periodsCount)
         matchTimeChanged(timeStepper)
+        periodsCountChanged(periodsCountStepper)
     }
 
     func showSelectSong() {
@@ -75,6 +79,11 @@ class SettingsViewController: UIViewController, MPMediaPickerControllerDelegate 
         matchTimeLabel.text = "\(Int(gameSettings.matchTime)) min"
     }
 
+    @IBAction func periodsCountChanged(_ sender: Any) {
+        gameSettings.periodsCount = Int((sender as! UIStepper).value)
+        periodsCountLabel.text = "\(gameSettings.periodsCount)"
+    }
+    
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "startGame") {

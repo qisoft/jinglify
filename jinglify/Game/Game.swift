@@ -17,18 +17,14 @@ class Game {
     private var isThrowing : Bool = false
     private var player : AudioPlayer
     private var settings : GameSettings
+    private var totalPeriods : Int
     private(set) var isPaused : Bool = false
-
-    private var statusText : String = ""{
-        didSet {
-            self.statusUpdateHandler?()
-        }
-    }
+    private(set) var currentPeriod = Observable<Int>(1)
+    private(set) var statusText = Observable<String>("")
 
     private var gameTimer : Timer?
     private var throwingTimer : Timer?
     private var gameEndHandler : (() -> Void)?
-    private var statusUpdateHandler: (() -> Void)?
 
     init(withAudioPlayer audioPlayer: AudioPlayer) {
         settings = GameSettings()
@@ -36,30 +32,26 @@ class Game {
         initialBeepTimeOffset = Utils.getRandomBeepTime()
         totalMatchTime = settings.matchTime * 60 + 30 + Double(initialBeepTimeOffset)
         matchTimeLeft = totalMatchTime
+        totalPeriods = settings.periodsCount >= 1 ? settings.periodsCount : 1
     }
 
-    func startGame(withStatusUpdateHandler statusUpdateHandler: @escaping () -> Void,
-                   andGameEndHandler gameEndHandler: @escaping () -> Void){
+    func startGame(withGameEndHandler gameEndHandler: @escaping () -> Void){
         isGameStarted = true
         self.gameEndHandler = gameEndHandler
-        self.statusUpdateHandler = statusUpdateHandler
-        self.update(timeLeft: self.totalMatchTime, timeSpent: 0)
         gameTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
 
             if !self.isThrowing && !self.isPaused {
-                self.matchTimeLeft = self.matchTimeLeft - 1
-
-
                 self.update(
                         timeLeft: self.matchTimeLeft,
                         timeSpent: self.totalMatchTime - self.matchTimeLeft)
+                self.matchTimeLeft = self.matchTimeLeft - 1
             }
         }
     }
 
     func pauseGame(){
         isPaused = true
-        statusText = "Paused"
+        statusText.set(newValue: "Paused")
         if isJinglePlaying {
             self.player.pauseJingle()
         }
@@ -87,13 +79,9 @@ class Game {
         self.player.playJingle()
     }
 
-    func getStatusText() -> String{
-        return statusText
-    }
-
     func throwAPuck(){
         
-        statusText = "Get Ready!"
+        statusText.set(newValue: "Get Ready!")
         player.vibrate()
         if self.isJinglePlaying {
             player.pauseJingle()
@@ -107,6 +95,12 @@ class Game {
             }
             self.isThrowing = false
         }
+    }
+    
+    private func startNewPeriod(){
+        try player.changeSong(song: settings.jingle)
+        self.currentPeriod.set(newValue: self.currentPeriod.get() + 1)
+        self.matchTimeLeft = totalMatchTime + 10
     }
 
     private func update(timeLeft: Double, timeSpent: Double){
@@ -124,7 +118,13 @@ class Game {
         switch timeLeft {
         case 0:
             self.player.longBeep()
-            stopGame()
+            if currentPeriod.get() == totalPeriods {
+                self.stopGame()
+            }
+            else {
+                self.startNewPeriod()
+            }
+            return
         case 7: self.player.fadeOutAndStopPlayer(onComplete: { () in
             self.isJinglePlaying = false
         })
@@ -136,14 +136,17 @@ class Game {
         default: break
         }
 
-        if(timeLeft <= settings.matchTime * 60){
-            statusText = Utils.stringFromTimeInterval(interval: timeLeft)
+        if(timeSpent < 0){
+            statusText.set(newValue: "Change your sides!")
         }
-        else if (timeSpent <= 30){
-            statusText = "Warm-up!"
+        else if(timeLeft <= settings.matchTime * 60){
+            statusText.set(newValue: Utils.stringFromTimeInterval(interval: timeLeft))
+        }
+        else if (timeSpent >= 0 && timeSpent <= 30){
+            statusText.set(newValue: "Warm-up!")
         }
         else{
-            statusText = "Get Ready!"
+            statusText.set(newValue: "Get Ready!")
         }
     }
 }
