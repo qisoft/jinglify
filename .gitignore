@@ -68,3 +68,5 @@ fastlane/test_output
 default.env
 AppStore_se.fastdev.jinglify.mobileprovision
 X387PVU3A2.cer
+
+\.idea/
