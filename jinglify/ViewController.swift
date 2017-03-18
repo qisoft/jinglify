@@ -41,6 +41,10 @@ class ViewController: UIViewController {
             game.currentPeriod.didChange.addHandler { (_, n) in
                 self.currentPeriodLabel.text = "Period \(n)"
             }
+            game.isPaused.didChange.addHandler { (_, n) in
+                self.pauseGameButton.setTitle(n ? "Resume game" : "Pause game", for: .normal)
+                self.throwThePuckButton.setTitle(n ? "Resume game and throw the puck!" : "Throw the puck!", for: .normal)
+            }
         }
     }
 
@@ -52,13 +56,11 @@ class ViewController: UIViewController {
 
     @IBAction func onPauseGameTap(_ sender: Any) {
         if let game = self.game {
-            if game.isPaused {
+            if game.isPaused.get() {
                 resumeGame()
             }
             else {
                 game.pauseGame()
-                pauseGameButton.setTitle("Resume game", for: .normal)
-                throwThePuckButton.setTitle("Resume game and throw the puck!", for: .normal)
             }
         }
     }
@@ -79,8 +81,6 @@ class ViewController: UIViewController {
 
     func resumeGame(){
         game?.resumeGame()
-        pauseGameButton.setTitle("Pause game", for: .normal)
-        throwThePuckButton.setTitle("Throw the puck!", for: .normal)
     }
     // MARK: - Audio player utils
 
