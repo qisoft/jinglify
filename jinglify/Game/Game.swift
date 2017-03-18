@@ -96,6 +96,7 @@ class Game {
     func throwAPuck(){
         
         statusText.set(newValue: "Get Ready!")
+        self.isPaused.set(newValue: false)
         player.vibrate()
         if self.isJinglePlaying {
             player.pauseJingle()
@@ -146,9 +147,9 @@ class Game {
         case 0:
             self.playJingle()
         case 22:
-            self.player.fadeOutAndStopPlayer(onComplete: { () in
-                self.isJinglePlaying = false
-            })
+            self.player.fadeOutAndStopPlayer()
+        case 30:
+            self.isJinglePlaying = false
         case 30+initialBeepTimeOffset: self.player.longBeep()
         default: break
         }
@@ -156,6 +157,7 @@ class Game {
         switch timeLeft {
         case 0:
             self.player.longBeep()
+            self.isJinglePlaying = false
             if currentPeriod.get() == totalPeriods {
                 self.stopGame()
             }
@@ -163,9 +165,7 @@ class Game {
                 self.startNewPeriod()
             }
             return
-        case 7: self.player.fadeOutAndStopPlayer(onComplete: { () in
-            self.isJinglePlaying = false
-        })
+        case 7: self.player.fadeOutAndStopPlayer()
         case 30: self.playJingle()
         case 59..<Int(settings.matchTime * 60):
             if timeLeft % 60 == 0 {
