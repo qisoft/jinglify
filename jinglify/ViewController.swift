@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     // MARK: - Reference outlets
     @IBOutlet weak var gameView: UIView!
     @IBOutlet weak var timeLeftLabel: UILabel!
+    @IBOutlet weak var pauseGameButton: UIButton!
+    @IBOutlet weak var throwThePuckButton: UIButton!
 
     var gameSettings = GameSettings()
     var game : Game?
@@ -38,7 +40,21 @@ class ViewController: UIViewController {
 
     // MARK: - Event handlers
     @IBAction func onThrowTap(_ sender: Any) {
+        resumeGame()
         game?.throwAPuck()
+    }
+
+    @IBAction func onPauseGameTap(_ sender: Any) {
+        if let game = self.game {
+            if game.isPaused {
+                resumeGame()
+            }
+            else {
+                game.pauseGame()
+                pauseGameButton.setTitle("Resume game", for: .normal)
+                throwThePuckButton.setTitle("Resume game and throw the puck!", for: .normal)
+            }
+        }
     }
 
     @IBAction func onStopGameTap(_ sender: Any) {
@@ -55,7 +71,11 @@ class ViewController: UIViewController {
 
     //MARK: - Game methods
 
-
+    func resumeGame(){
+        game?.resumeGame()
+        pauseGameButton.setTitle("Pause game", for: .normal)
+        throwThePuckButton.setTitle("Throw the puck!", for: .normal)
+    }
     // MARK: - Audio player utils
 
     func getAudioPlayer(forFile : String, withExtension : String) -> AVAudioPlayer?{

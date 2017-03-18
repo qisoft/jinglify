@@ -179,7 +179,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aLr-3q-Tc7">
-                                        <rect key="frame" x="0.0" y="299" width="414" height="377"/>
+                                        <rect key="frame" x="0.0" y="319" width="414" height="357"/>
                                         <color key="backgroundColor" name="selectedMenuItemColor" catalog="System" colorSpace="catalog"/>
                                         <state key="normal" title="Throw the puck!">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -189,17 +189,30 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time left:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUx-eI-u25">
-                                        <rect key="frame" x="171" y="124" width="72" height="21"/>
+                                        <rect key="frame" x="171" y="84" width="72" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.18823529410000001" green="0.23921568630000001" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iVi-Ul-DhQ">
-                                        <rect key="frame" x="110" y="153" width="194" height="86"/>
+                                        <rect key="frame" x="110" y="113" width="194" height="86"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="72"/>
                                         <color key="textColor" red="0.18823529410000001" green="0.23921568630000001" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j7G-Dg-s8F">
+                                        <rect key="frame" x="0.0" y="259" width="414" height="60"/>
+                                        <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="fOj-RJ-bK5"/>
+                                        </constraints>
+                                        <state key="normal" title="Pause game">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onPauseGameTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Td4-Z7-TKW"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -207,12 +220,15 @@
                                     <constraint firstItem="aLr-3q-Tc7" firstAttribute="leading" secondItem="waf-Ob-Iik" secondAttribute="leading" id="E7L-SW-Q0m"/>
                                     <constraint firstAttribute="trailing" secondItem="aLr-3q-Tc7" secondAttribute="trailing" id="PDu-N5-jsC"/>
                                     <constraint firstItem="iVi-Ul-DhQ" firstAttribute="centerX" secondItem="waf-Ob-Iik" secondAttribute="centerX" id="Q2i-Aa-jHM"/>
-                                    <constraint firstItem="aLr-3q-Tc7" firstAttribute="top" secondItem="iVi-Ul-DhQ" secondAttribute="bottom" constant="60" id="Xgh-MG-1xS"/>
+                                    <constraint firstItem="aLr-3q-Tc7" firstAttribute="top" secondItem="iVi-Ul-DhQ" secondAttribute="bottom" constant="120" id="Xgh-MG-1xS"/>
+                                    <constraint firstItem="j7G-Dg-s8F" firstAttribute="leading" secondItem="waf-Ob-Iik" secondAttribute="leading" id="dji-aQ-WzV"/>
                                     <constraint firstItem="iVi-Ul-DhQ" firstAttribute="top" secondItem="zUx-eI-u25" secondAttribute="bottom" constant="8" id="gan-S3-x4h"/>
                                     <constraint firstAttribute="trailing" secondItem="JGE-fD-dsY" secondAttribute="trailing" id="rKt-hw-3Eb"/>
                                     <constraint firstAttribute="bottom" secondItem="JGE-fD-dsY" secondAttribute="bottom" id="rRH-de-bSC"/>
                                     <constraint firstItem="JGE-fD-dsY" firstAttribute="leading" secondItem="waf-Ob-Iik" secondAttribute="leading" id="sDv-Im-y1Z"/>
-                                    <constraint firstItem="zUx-eI-u25" firstAttribute="top" secondItem="waf-Ob-Iik" secondAttribute="top" constant="124" id="url-qK-eOm"/>
+                                    <constraint firstItem="zUx-eI-u25" firstAttribute="top" secondItem="waf-Ob-Iik" secondAttribute="top" constant="84" id="url-qK-eOm"/>
+                                    <constraint firstItem="aLr-3q-Tc7" firstAttribute="top" secondItem="j7G-Dg-s8F" secondAttribute="bottom" id="v6c-vb-Xs2"/>
+                                    <constraint firstAttribute="trailing" secondItem="j7G-Dg-s8F" secondAttribute="trailing" id="vaR-Zk-eaX"/>
                                     <constraint firstItem="zUx-eI-u25" firstAttribute="centerX" secondItem="waf-Ob-Iik" secondAttribute="centerX" id="zcX-hp-KWa"/>
                                 </constraints>
                             </view>
@@ -227,6 +243,8 @@
                     </view>
                     <connections>
                         <outlet property="gameView" destination="waf-Ob-Iik" id="dO1-5h-fOP"/>
+                        <outlet property="pauseGameButton" destination="j7G-Dg-s8F" id="7cj-dK-Xk7"/>
+                        <outlet property="throwThePuckButton" destination="aLr-3q-Tc7" id="y5m-0M-YiI"/>
                         <outlet property="timeLeftLabel" destination="iVi-Ul-DhQ" id="S05-mH-2oY"/>
                     </connections>
                 </viewController>
@@ -247,7 +265,7 @@
                                 <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aiQ-99-8wH" id="G1Y-pe-dgA">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="79.666666666666671"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bNT-lt-Mn6">
@@ -258,16 +276,16 @@
                                             </constraints>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="imr-1t-R2x">
-                                            <rect key="frame" x="79" y="21" width="513" height="38"/>
+                                            <rect key="frame" x="79" y="21" width="327" height="38"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G7K-Jp-2Hp">
-                                                    <rect key="frame" x="0.0" y="0.0" width="513" height="21"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="327" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="du9-U6-LRt">
-                                                    <rect key="frame" x="0.0" y="21" width="513" height="17"/>
+                                                    <rect key="frame" x="0.0" y="21" width="327" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>

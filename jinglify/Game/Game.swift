@@ -17,11 +17,14 @@ class Game {
     private var isThrowing : Bool = false
     private var player : AudioPlayer
     private var settings : GameSettings
+    private(set) var isPaused : Bool = false
+
     private var statusText : String = ""{
         didSet {
             self.statusUpdateHandler?()
         }
     }
+
     private var gameTimer : Timer?
     private var throwingTimer : Timer?
     private var gameEndHandler : (() -> Void)?
@@ -43,7 +46,7 @@ class Game {
         self.update(timeLeft: self.totalMatchTime, timeSpent: 0)
         gameTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
 
-            if !self.isThrowing {
+            if !self.isThrowing && !self.isPaused {
                 self.matchTimeLeft = self.matchTimeLeft - 1
 
 
@@ -51,6 +54,21 @@ class Game {
                         timeLeft: self.matchTimeLeft,
                         timeSpent: self.totalMatchTime - self.matchTimeLeft)
             }
+        }
+    }
+
+    func pauseGame(){
+        isPaused = true
+        statusText = "Paused"
+        if isJinglePlaying {
+            self.player.pauseJingle()
+        }
+    }
+
+    func resumeGame(){
+        isPaused = false
+        if isJinglePlaying {
+            self.player.playJingle()
         }
     }
 
