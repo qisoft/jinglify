@@ -12,6 +12,8 @@ class AudioPlayer {
     private var player : AVAudioPlayer?
     private var beepPlayer : AVAudioPlayer?
     private var shortBeepPlayer : AVAudioPlayer?
+    private var fadingCurveIdx = 0
+    private var isFading = false
 
     private var beepTimer: Timer?
     private var playerTimer: Timer?
@@ -43,6 +45,10 @@ class AudioPlayer {
 
     func pauseJingle(){
         player?.pause()
+        if isFading {
+            self.playerTimer?.invalidate()
+            self.playerTimer = nil
+        }
     }
 
     private func enqueue() {
@@ -59,6 +65,9 @@ class AudioPlayer {
 
     func playJingle(){
         player?.play()
+        if isFading {
+            self.setupFadingTimer()
+        }
     }
 
     func longBeep(){
@@ -112,18 +121,26 @@ class AudioPlayer {
         0
     ]
     
-    func fadeOutAndStopPlayer(onComplete: @escaping () -> Void){
-        var volumeCurveIdx : Int = 0
+    func fadeOutAndStopPlayer(){
+        self.fadingCurveIdx = 0
+        self.setupFadingTimer()
+        self.isFading = true
+    }
+
+    private func setupFadingTimer(){
+        if let timer = self.playerTimer {
+            timer.invalidate()
+        }
+
         playerTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true, block: { (timer) in
-            let volume = self.volumeCurve[volumeCurveIdx]
-            volumeCurveIdx += 1
+            let volume = self.volumeCurve[self.fadingCurveIdx]
+            self.fadingCurveIdx += 1
             self.setVolume(to: volume)
             if(volume == 0){
                 self.player?.stop()
                 self.player?.currentTime = 0
-                onComplete()
                 self.setVolume(to: 1.0)
-                
+                self.isFading = false
                 self.playerTimer?.invalidate()
                 self.playerTimer = nil
             }

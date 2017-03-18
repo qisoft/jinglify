@@ -50,7 +50,6 @@ class ViewController: UIViewController {
 
     // MARK: - Event handlers
     @IBAction func onThrowTap(_ sender: Any) {
-        resumeGame()
         game?.throwAPuck()
     }
 
