@@ -92,7 +92,7 @@ class AvMusicPlayer: JinglePlayer {
             if(volume == 0){
                 self.player?.stop()
                 self.player?.currentTime = 0
-                self.setVolume(to: volume)
+                self.setVolume(to: 1.0)
                 self.isFading = false
                 self.playerTimer?.invalidate()
                 self.playerTimer = nil
