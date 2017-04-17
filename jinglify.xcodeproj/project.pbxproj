@@ -16,6 +16,9 @@
 		28D2D2781E420A4800C5A9B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28D2D2761E420A4800C5A9B0 /* LaunchScreen.storyboard */; };
 		28D2D2851E423F3C00C5A9B0 /* beep-01a.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28D2D2831E423F3C00C5A9B0 /* beep-01a.wav */; };
 		28D2D2861E423F3C00C5A9B0 /* beep-02.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28D2D2841E423F3C00C5A9B0 /* beep-02.wav */; };
+		498CF9A81E86913F003C8376 /* JinglePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498CF9A71E86913F003C8376 /* JinglePlayer.swift */; };
+		498CF9AA1E869267003C8376 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498CF9A91E869267003C8376 /* MusicPlayer.swift */; };
+		498CF9AC1E86939A003C8376 /* AvMusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498CF9AB1E86939A003C8376 /* AvMusicPlayer.swift */; };
 		28EA88E31EA507DF00EA45AF /* beep-03.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28EA88E21EA507DF00EA45AF /* beep-03.wav */; };
 		854E76671E4DA17800238A0E /* TracksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854E76661E4DA17800238A0E /* TracksTableViewController.swift */; };
 		854E76691E4DA1F700238A0E /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854E76681E4DA1F700238A0E /* TrackCell.swift */; };
@@ -40,6 +43,9 @@
 		28D2D2791E420A4800C5A9B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28D2D2831E423F3C00C5A9B0 /* beep-01a.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "beep-01a.wav"; sourceTree = "<group>"; };
 		28D2D2841E423F3C00C5A9B0 /* beep-02.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "beep-02.wav"; sourceTree = "<group>"; };
+		498CF9A71E86913F003C8376 /* JinglePlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JinglePlayer.swift; sourceTree = "<group>"; };
+		498CF9A91E869267003C8376 /* MusicPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
+		498CF9AB1E86939A003C8376 /* AvMusicPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvMusicPlayer.swift; sourceTree = "<group>"; };
 		28EA88E21EA507DF00EA45AF /* beep-03.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "beep-03.wav"; sourceTree = "<group>"; };
 		854E76661E4DA17800238A0E /* TracksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TracksTableViewController.swift; sourceTree = "<group>"; };
 		854E76681E4DA1F700238A0E /* TrackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
@@ -128,6 +134,9 @@
 				C6D13881AC9DF140C32C8542 /* Game.swift */,
 				C6D136955260CC1E161B6A25 /* GameSettings.swift */,
 				C6D1393AAA7532FC3B6038E8 /* AudioPlayer.swift */,
+				498CF9A91E869267003C8376 /* MusicPlayer.swift */,
+				498CF9A71E86913F003C8376 /* JinglePlayer.swift */,
+				498CF9AB1E86939A003C8376 /* AvMusicPlayer.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -208,6 +217,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				498CF9AA1E869267003C8376 /* MusicPlayer.swift in Sources */,
+				498CF9AC1E86939A003C8376 /* AvMusicPlayer.swift in Sources */,
 				854E76691E4DA1F700238A0E /* TrackCell.swift in Sources */,
 				854E76671E4DA17800238A0E /* TracksTableViewController.swift in Sources */,
 				28D2D2701E420A4800C5A9B0 /* ViewController.swift in Sources */,
@@ -219,6 +230,7 @@
 				C6D13F71108D395F25104282 /* Utils.swift in Sources */,
 				C6D131F62075E56301CA30FF /* Observable.swift in Sources */,
 				C6D139BD8726FBFAF2A034A0 /* Event.swift in Sources */,
+				498CF9A81E86913F003C8376 /* JinglePlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
