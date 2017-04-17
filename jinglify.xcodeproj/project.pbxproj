@@ -16,6 +16,7 @@
 		28D2D2781E420A4800C5A9B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28D2D2761E420A4800C5A9B0 /* LaunchScreen.storyboard */; };
 		28D2D2851E423F3C00C5A9B0 /* beep-01a.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28D2D2831E423F3C00C5A9B0 /* beep-01a.wav */; };
 		28D2D2861E423F3C00C5A9B0 /* beep-02.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28D2D2841E423F3C00C5A9B0 /* beep-02.wav */; };
+		28EA88E31EA507DF00EA45AF /* beep-03.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28EA88E21EA507DF00EA45AF /* beep-03.wav */; };
 		854E76671E4DA17800238A0E /* TracksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854E76661E4DA17800238A0E /* TracksTableViewController.swift */; };
 		854E76691E4DA1F700238A0E /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854E76681E4DA1F700238A0E /* TrackCell.swift */; };
 		8556FA851E4A0D0E00629336 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556FA841E4A0D0E00629336 /* SettingsViewController.swift */; };
@@ -39,6 +40,7 @@
 		28D2D2791E420A4800C5A9B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28D2D2831E423F3C00C5A9B0 /* beep-01a.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "beep-01a.wav"; sourceTree = "<group>"; };
 		28D2D2841E423F3C00C5A9B0 /* beep-02.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "beep-02.wav"; sourceTree = "<group>"; };
+		28EA88E21EA507DF00EA45AF /* beep-03.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "beep-03.wav"; sourceTree = "<group>"; };
 		854E76661E4DA17800238A0E /* TracksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TracksTableViewController.swift; sourceTree = "<group>"; };
 		854E76681E4DA1F700238A0E /* TrackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
 		8556FA841E4A0D0E00629336 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 		28D2D26C1E420A4800C5A9B0 /* jinglify */ = {
 			isa = PBXGroup;
 			children = (
+				28EA88E21EA507DF00EA45AF /* beep-03.wav */,
 				28D2D2831E423F3C00C5A9B0 /* beep-01a.wav */,
 				28D2D2841E423F3C00C5A9B0 /* beep-02.wav */,
 				28D2D26D1E420A4800C5A9B0 /* AppDelegate.swift */,
@@ -190,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28D2D2781E420A4800C5A9B0 /* LaunchScreen.storyboard in Resources */,
+				28EA88E31EA507DF00EA45AF /* beep-03.wav in Resources */,
 				28D2D2751E420A4800C5A9B0 /* Assets.xcassets in Resources */,
 				28D2D2731E420A4800C5A9B0 /* Main.storyboard in Resources */,
 				28D2D2851E423F3C00C5A9B0 /* beep-01a.wav in Resources */,
