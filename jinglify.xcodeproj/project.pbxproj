@@ -19,6 +19,7 @@
 		498CF9A81E86913F003C8376 /* JinglePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498CF9A71E86913F003C8376 /* JinglePlayer.swift */; };
 		498CF9AA1E869267003C8376 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498CF9A91E869267003C8376 /* MusicPlayer.swift */; };
 		498CF9AC1E86939A003C8376 /* AvMusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498CF9AB1E86939A003C8376 /* AvMusicPlayer.swift */; };
+		28EA88E31EA507DF00EA45AF /* beep-03.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28EA88E21EA507DF00EA45AF /* beep-03.wav */; };
 		854E76671E4DA17800238A0E /* TracksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854E76661E4DA17800238A0E /* TracksTableViewController.swift */; };
 		854E76691E4DA1F700238A0E /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854E76681E4DA1F700238A0E /* TrackCell.swift */; };
 		8556FA851E4A0D0E00629336 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556FA841E4A0D0E00629336 /* SettingsViewController.swift */; };
@@ -45,6 +46,7 @@
 		498CF9A71E86913F003C8376 /* JinglePlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JinglePlayer.swift; sourceTree = "<group>"; };
 		498CF9A91E869267003C8376 /* MusicPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
 		498CF9AB1E86939A003C8376 /* AvMusicPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvMusicPlayer.swift; sourceTree = "<group>"; };
+		28EA88E21EA507DF00EA45AF /* beep-03.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "beep-03.wav"; sourceTree = "<group>"; };
 		854E76661E4DA17800238A0E /* TracksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TracksTableViewController.swift; sourceTree = "<group>"; };
 		854E76681E4DA1F700238A0E /* TrackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
 		8556FA841E4A0D0E00629336 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 		28D2D26C1E420A4800C5A9B0 /* jinglify */ = {
 			isa = PBXGroup;
 			children = (
+				28EA88E21EA507DF00EA45AF /* beep-03.wav */,
 				28D2D2831E423F3C00C5A9B0 /* beep-01a.wav */,
 				28D2D2841E423F3C00C5A9B0 /* beep-02.wav */,
 				28D2D26D1E420A4800C5A9B0 /* AppDelegate.swift */,
@@ -199,6 +202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28D2D2781E420A4800C5A9B0 /* LaunchScreen.storyboard in Resources */,
+				28EA88E31EA507DF00EA45AF /* beep-03.wav in Resources */,
 				28D2D2751E420A4800C5A9B0 /* Assets.xcassets in Resources */,
 				28D2D2731E420A4800C5A9B0 /* Main.storyboard in Resources */,
 				28D2D2851E423F3C00C5A9B0 /* beep-01a.wav in Resources */,

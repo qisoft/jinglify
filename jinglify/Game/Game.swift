@@ -27,6 +27,7 @@ class Game {
     private var gameTimer : Timer?
     private var throwingTimer : Timer?
     private var gameEndHandler : ((Bool) -> Void)?
+    private var throwingGoalTimer: Timer?
     private(set) static var currentGame : Game?
 
     init(withAudioPlayer audioPlayer: AudioPlayer) {
@@ -82,6 +83,8 @@ class Game {
         self.gameTimer = nil
         self.throwingTimer?.invalidate()
         self.throwingTimer = nil
+        self.throwingGoalTimer?.invalidate()
+        self.throwingGoalTimer = nil
     }
 
     func stopGame(force: Bool = false){
@@ -107,12 +110,20 @@ class Game {
 
         self.invalidateTimers()
         self.throwingTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(Utils.getRandomBeepTime()), repeats: false) { (timer) in
-            self.player.longBeep()
+            self.beepForThrowing()
             if self.isJinglePlaying {
                 self.player.playJingle()
             }
             self.setupGameTimer()
         }
+    }
+    
+    private func beepForThrowing(){
+        self.player.longBeep()
+        
+        self.throwingGoalTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { _ in
+            self.player.throwingGoalBeep()
+        })
     }
     
     private func startNewPeriod(){
@@ -163,7 +174,8 @@ class Game {
             self.player.fadeOutAndStopPlayer()
         case 30:
             self.isJinglePlaying = false
-        case 30+initialBeepTimeOffset: self.player.longBeep()
+        case 30+initialBeepTimeOffset:
+            self.beepForThrowing()            
         default: break
         }
 
