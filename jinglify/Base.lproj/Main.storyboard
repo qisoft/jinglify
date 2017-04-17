@@ -218,7 +218,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aLr-3q-Tc7">
-                                        <rect key="frame" x="0.0" y="319" width="414" height="357"/>
+                                        <rect key="frame" x="0.0" y="417" width="414" height="259"/>
                                         <color key="backgroundColor" name="selectedMenuItemColor" catalog="System" colorSpace="catalog"/>
                                         <state key="normal" title="Throw the puck!">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -234,16 +234,16 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Warm-up!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="36" translatesAutoresizingMaskIntoConstraints="NO" id="iVi-Ul-DhQ">
-                                        <rect key="frame" x="8" y="113" width="398" height="86"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="72"/>
+                                        <rect key="frame" x="8" y="113" width="398" height="84"/>
+                                        <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="72"/>
                                         <color key="textColor" red="0.18823529410000001" green="0.23921568630000001" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j7G-Dg-s8F">
-                                        <rect key="frame" x="0.0" y="259" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="257" width="414" height="160"/>
                                         <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="fOj-RJ-bK5"/>
+                                            <constraint firstAttribute="height" constant="160" id="fOj-RJ-bK5"/>
                                         </constraints>
                                         <state key="normal" title="Pause game">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -267,7 +267,7 @@
                                     <constraint firstAttribute="trailing" secondItem="iVi-Ul-DhQ" secondAttribute="trailing" constant="8" id="NJM-Qf-GAZ"/>
                                     <constraint firstAttribute="trailing" secondItem="aLr-3q-Tc7" secondAttribute="trailing" id="PDu-N5-jsC"/>
                                     <constraint firstItem="iVi-Ul-DhQ" firstAttribute="centerX" secondItem="waf-Ob-Iik" secondAttribute="centerX" id="Q2i-Aa-jHM"/>
-                                    <constraint firstItem="aLr-3q-Tc7" firstAttribute="top" secondItem="iVi-Ul-DhQ" secondAttribute="bottom" constant="120" id="Xgh-MG-1xS"/>
+                                    <constraint firstItem="aLr-3q-Tc7" firstAttribute="top" secondItem="iVi-Ul-DhQ" secondAttribute="bottom" constant="220" id="Xgh-MG-1xS"/>
                                     <constraint firstItem="j7G-Dg-s8F" firstAttribute="leading" secondItem="waf-Ob-Iik" secondAttribute="leading" id="dji-aQ-WzV"/>
                                     <constraint firstItem="iVi-Ul-DhQ" firstAttribute="top" secondItem="zUx-eI-u25" secondAttribute="bottom" constant="8" id="gan-S3-x4h"/>
                                     <constraint firstAttribute="trailing" secondItem="gKs-Q4-lMI" secondAttribute="trailing" id="i1K-8y-iqX"/>
@@ -316,7 +316,7 @@
                                 <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aiQ-99-8wH" id="G1Y-pe-dgA">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="79.666666666666671"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bNT-lt-Mn6">
