@@ -12,12 +12,13 @@ class AudioPlayer {
     private var player : AVAudioPlayer?
     private var beepPlayer : AVAudioPlayer?
     private var shortBeepPlayer : AVAudioPlayer?
+    private var throwGoalBeepPlayer : AVAudioPlayer?
     private var fadingCurveIdx = 0
     private var isFading = false
 
     private var beepTimer: Timer?
     private var playerTimer: Timer?
-
+    
     init(withSong song: MPMediaItem) {
         changeSong(song: song)
         do {
@@ -25,6 +26,7 @@ class AudioPlayer {
         } catch{ }
         beepPlayer = getAudioPlayer(forFile: "beep-01a", withExtension: "wav")
         shortBeepPlayer = getAudioPlayer(forFile: "beep-02", withExtension: "wav")
+        throwGoalBeepPlayer = getAudioPlayer(forFile: "beep-03", withExtension: "wav")
     }
 
     deinit {
@@ -72,6 +74,10 @@ class AudioPlayer {
 
     func longBeep(){
         beepPlayer?.play()
+    }
+    
+    func throwingGoalBeep(){
+        self.throwGoalBeepPlayer?.play()
     }
 
     func beep(times: Int){
