@@ -16,15 +16,17 @@ class Game {
     private var lastHandledTime : Int = -1
     private var isJinglePlaying : Bool = false
     private var player : AudioPlayer
+    private var isOvertime: Bool = false
     private var settings : GameSettings
     private var totalPeriods : Int
+
     private(set) var isPaused = Observable<Bool>(false)
     private(set) var currentPeriod = Observable<Int>(1)
     private(set) var statusText = Observable<String>("")
 
     private var gameTimer : Timer?
     private var throwingTimer : Timer?
-    private var gameEndHandler : (() -> Void)?
+    private var gameEndHandler : ((Bool) -> Void)?
     private(set) static var currentGame : Game?
 
     init(withAudioPlayer audioPlayer: AudioPlayer) {
@@ -37,7 +39,7 @@ class Game {
         Game.currentGame = self
     }
 
-    func startGame(withGameEndHandler gameEndHandler: @escaping () -> Void){
+    func startGame(withGameEndHandler gameEndHandler: @escaping (Bool) -> Void){
         isGameStarted = true
         self.gameEndHandler = gameEndHandler
         self.setupGameTimer()
@@ -48,12 +50,13 @@ class Game {
             gameTimer.invalidate()
         }
 
-        self.update(timeLeft: self.matchTimeLeft,
-                timeSpent: self.totalMatchTime - self.matchTimeLeft)
+        self.update()
         self.gameTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
-            self.matchTimeLeft = self.matchTimeLeft - 1
-            self.update(timeLeft: self.matchTimeLeft,
-                    timeSpent: self.totalMatchTime - self.matchTimeLeft)
+            if !self.isOvertime {
+                self.matchTimeLeft = self.matchTimeLeft - 1
+            }
+
+            self.update()
         }
     }
 
@@ -81,11 +84,11 @@ class Game {
         self.throwingTimer = nil
     }
 
-    func stopGame(){
+    func stopGame(force: Bool = false){
         self.isGameStarted = false
         self.invalidateTimers()
         self.player.stopPlayers()
-        self.gameEndHandler?()
+        self.gameEndHandler?(force)
     }
 
     private func playJingle(){
@@ -118,23 +121,33 @@ class Game {
         self.matchTimeLeft = totalMatchTime + 10
     }
 
-    private func updateStatus(timeLeft: Int, timeSpent: Int){
-        if(timeSpent < 0){
-            statusText.set(newValue: "Change your sides!")
+    private func getStatus(timeLeft: Int, timeSpent: Int) -> String{
+        if self.isOvertime {
+            return "Overtime!"
         }
-        else if(timeLeft <= Int(settings.matchTime * 60)){
-            statusText.set(newValue: Utils.stringFromTimeInterval(interval: Double(timeLeft)))
+        if timeSpent < 0 {
+            return "Change your sides!"
         }
-        else if (timeSpent >= 0 && timeSpent <= 27){
-            statusText.set(newValue: "Warm-up!")
+        if timeLeft <= Int(settings.matchTime * 60) {
+            return Utils.stringFromTimeInterval(interval: Double(timeLeft))
         }
-        else{
-            statusText.set(newValue: "Get Ready!")
+        if timeSpent >= 0 && timeSpent <= 27{
+            return "Warm-up!"
+        }
+        else {
+            return "Get Ready!"
         }
     }
 
-    private func update(timeLeft: Int, timeSpent: Int){
-        self.updateStatus(timeLeft: timeLeft, timeSpent: timeSpent)
+    func startOvertime(){
+        self.isOvertime = true
+        self.currentPeriod.set(newValue: 0)
+    }
+
+    private func update(){
+        let timeLeft = self.matchTimeLeft
+        let timeSpent = self.totalMatchTime - self.matchTimeLeft
+        statusText.set(newValue: self.getStatus(timeLeft: timeLeft, timeSpent: timeSpent))
 
         // prevent events from occurring twice
         if lastHandledTime == timeSpent {
@@ -159,7 +172,8 @@ class Game {
             self.player.longBeep()
             self.isJinglePlaying = false
             if currentPeriod.get() == totalPeriods {
-                self.stopGame()
+                self.isOvertime = true
+                self.currentPeriod.set(newValue: 0)
             }
             else {
                 self.startNewPeriod()

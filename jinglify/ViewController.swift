@@ -32,14 +32,32 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let game = self.game {
-            game.startGame(withGameEndHandler: {() in
-                self.dismiss(animated: true)
+            game.startGame(withGameEndHandler: {(force) in
+                if force {
+                    self.dismiss(animated: true)
+                }
+                else {
+                    let alert = UIAlertController(title: "Game over", message: "Do you want to play overtime?", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+                        game.startOvertime()
+                        alert.dismiss(animated: false) }))
+                    alert.addAction(UIAlertAction(title: "No", style: .destructive, handler: { _ in
+                        self.dismiss(animated: true)
+                    }))
+                    self.present(alert, animated: true)
+                }
             })
             game.statusText.didChange.addHandler { (_, n) in
                 self.timeLeftLabel.text = n
             }
             game.currentPeriod.didChange.addHandler { (_, n) in
-                self.currentPeriodLabel.text = "Period \(n)"
+                if n > 0 {
+                    self.currentPeriodLabel.text = "Period \(n)"
+                    self.currentPeriodLabel.isHidden = false
+                }
+                else {
+                    self.currentPeriodLabel.isHidden = true
+                }
             }
             game.isPaused.didChange.addHandler { (_, n) in
                 self.pauseGameButton.setTitle(n ? "Resume game" : "Pause game", for: .normal)
@@ -67,7 +85,7 @@ class ViewController: UIViewController {
     @IBAction func onStopGameTap(_ sender: Any) {
         let alert = UIAlertController(title: "Stop game", message: "Do you want to stop the game?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { _ in
-            self.game?.stopGame()
+            self.game?.stopGame(force: true)
         }))
         alert.addAction(UIAlertAction(title: "No", style: .destructive, handler: { _ in
             alert.dismiss(animated: true, completion: nil)
