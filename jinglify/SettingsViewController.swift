@@ -69,8 +69,6 @@ class SettingsViewController: UIViewController, MPMediaPickerControllerDelegate 
         let controller = MPMediaPickerController(mediaTypes: MPMediaType.music)
         controller.delegate = self
         controller.allowsPickingMultipleItems = true
-        controller.showsCloudItems = false
-        controller.showsItemsWithProtectedAssets = false
         self.present(controller, animated: true)
     }
 
