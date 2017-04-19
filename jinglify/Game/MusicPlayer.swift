@@ -11,10 +11,18 @@ import MediaPlayer
 
 class MusicPlayer: JinglePlayer {
     private let player = MPMusicPlayerController.applicationMusicPlayer()
+    private var songItem: MPMediaItem?
 
     func setJingle(song: MPMediaItem) {
-        player.setQueue(with: MPMediaItemCollection(items: [song]))
-        player.prepareToPlay()
+        songItem = song
+        enqueSong()
+    }
+
+    private func enqueSong() {
+        if let song = songItem {
+            player.setQueue(with: MPMediaItemCollection(items: [song]))
+            player.prepareToPlay()
+        }
     }
 
     func play() {
@@ -26,11 +34,18 @@ class MusicPlayer: JinglePlayer {
     }
 
     func stop() {
+        isFading = false
         player.stop()
+        enqueSong()
     }
 
     func fadeOutAndStop() {
-        player.stop()
+        isFading = true
+        let dtime = DispatchTime(uptimeNanoseconds: 6 * NSEC_PER_SEC)
+
+        DispatchQueue.main.asyncAfter(deadline: dtime) { 
+            self.stop()
+        }
     }
 
     var isFading = false
